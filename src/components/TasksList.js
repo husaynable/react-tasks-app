@@ -1,34 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import Task from './Task';
 
-const TASKS = [
-  {
-    id: 1,
-    username: 'Test1',
-    email: 'test1@mail.com',
-    text: 'Teeeeest',
-    status: 10
-  },
-  {
-    id: 2,
-    username: 'Test2',
-    email: 'test2@mail.ru',
-    text: 'Teasdafasd asdf asdasd fasd asdf asd',
-    status: 0
-  },
-  {
-    id: 3,
-    username: 'Test3',
-    email: 'test3@mail.ru',
-    text:
-      'Tasdfasdk asdf asadf asdf asdf asdfasgj;lkj klj lkj jhasdkfhjk hadsfh',
-    status: 0
-  }
-];
-
-const TasksList = () => {
-  const [tasks, setTasks] = useState(TASKS);
-
+const TasksList = ({ tasks }) => {
   return (
     <div style={{ margin: '20px 0' }}>
       {tasks.map(task => (
@@ -38,4 +12,10 @@ const TasksList = () => {
   );
 };
 
-export default TasksList;
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks
+  };
+};
+
+export default connect(mapStateToProps)(TasksList);

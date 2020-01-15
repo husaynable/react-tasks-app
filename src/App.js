@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
 
-function App() {
+import Home from './pages/Home';
+import Login from './pages/Login';
+import { loadTasks } from './actions';
+import { connect } from 'react-redux';
+
+function App({ onLoadTasks }) {
+  useEffect(() => {
+    onLoadTasks();
+  }, [onLoadTasks]);
+
   return (
     <BrowserRouter>
       <Switch>
-        <Route to="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Home} />
       </Switch>
     </BrowserRouter>
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadTasks: () => dispatch(loadTasks())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
