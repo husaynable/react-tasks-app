@@ -1,8 +1,8 @@
 import * as actions from './actions';
+import { getTokenFromLS } from './utils';
 
 const initialState = {
   tasks: [],
-  token: getTokenFromLS(),
   isAdmin: !!getTokenFromLS(),
   currentPage: 1,
   countOfPages: 1,
@@ -24,6 +24,12 @@ export function reducer(state = initialState, action) {
         tasks: [...state.tasks, action.payload],
         countOfPages: ++state.countOfPages
       };
+    case actions.SORT_CHANGED:
+      return {
+        ...state,
+        sortField: action.payload.field,
+        sortDirection: action.payload.direction
+      };
     case actions.LOGGED_IN:
       return {
         ...state,
@@ -41,6 +47,4 @@ export function reducer(state = initialState, action) {
   }
 }
 
-function getTokenFromLS() {
-  return localStorage.getItem('TASKS_ADMIN_TOKEN');
-}
+export const getToken = getTokenFromLS;

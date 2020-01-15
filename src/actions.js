@@ -1,15 +1,15 @@
+import { getUrl } from './utils';
+
 export const TASKS_LOADED = 'TASKS_LOADED';
 export const ADD_TASK = 'ADD_TASK';
 export const TASK_ADDED = 'TASK_ADDED';
 export const TASK_ADDING_ERROR = 'TASK_ADDING_ERROR';
+export const SORT_CHANGED = 'SORT_CHANGED';
 
 export const LOGGED_IN = 'LOGGED_IN';
 export const LOGGED_OUT = 'LOGGED_OUT';
 
 export const SET_PAGE = 'SET_PAGE';
-
-const getUrl = path =>
-  `https://uxcandy.com/~shapoval/test-task-backend/v2/${path}?developer=HusainEsambaev`;
 
 export const loadTasks = (
   page = 1,
@@ -26,12 +26,11 @@ export const loadTasks = (
     fetch(getUrl('') + '&' + params.toLocaleString())
       .then(response => response.json())
       .then(body => {
-        console.log(body);
         dispatch({
           type: TASKS_LOADED,
           payload: {
             tasks: body.message.tasks,
-            countOfPages: Math.floor(body.message.tasks.length / 3)
+            countOfPages: Math.floor(body.message['total_task_count'] / 3)
           }
         });
       });
@@ -50,6 +49,13 @@ export const addTask = (form, successHandler, errorHandler) => {
           dispatch({ type: TASK_ADDED, payload: body.message });
         }
       });
+  };
+};
+
+export const sortChanged = (field, direction) => {
+  return {
+    type: SORT_CHANGED,
+    payload: { field, direction }
   };
 };
 
