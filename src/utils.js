@@ -7,7 +7,7 @@ export function getTokenFromLS() {
 }
 
 export function getUrl(path) {
-  return `https://uxcandy.com/~shapoval/test-task-backend/v2/${path}?developer=HusainEsambaev`;
+  return `https://uxcandy.com/~shapoval/test-task-backend/v2/${path}?developer=HusainEsambaevPROD`;
 }
 
 export function deleteToken() {
