@@ -9,7 +9,7 @@ import NewTask from '../components/NewTask';
 import Paginator from '../components/Paginator';
 import { logout } from '../actions';
 
-const Home = ({ isAdmin, onLogout }) => {
+const Home = ({ isAdmin, countOfPages, onLogout }) => {
   return (
     <div className="container">
       {isAdmin ? (
@@ -27,14 +27,15 @@ const Home = ({ isAdmin, onLogout }) => {
       <NewTask />
       <Sort />
       <TasksList />
-      <Paginator />
+      {countOfPages > 0 ? <Paginator /> : null}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    isAdmin: state.isAdmin
+    isAdmin: state.isAdmin,
+    countOfPages: state.countOfPages
   };
 };
 
