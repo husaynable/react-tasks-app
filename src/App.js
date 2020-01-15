@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { loadTasks } from './actions';
 import { connect } from 'react-redux';
 
-function App({ onLoadTasks }) {
-  useEffect(() => {
-    onLoadTasks();
-  }, [onLoadTasks]);
-
+function App({ isAdmin }) {
   return (
     <BrowserRouter>
+      <Button style={{ position: 'absolute', right: '10px' }}>
+        {isAdmin ? 'Выйти' : 'Войти'}
+      </Button>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/" component={Home} />
@@ -21,10 +20,10 @@ function App({ onLoadTasks }) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    onLoadTasks: () => dispatch(loadTasks())
+    isAdmin: state.isAdmin
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
