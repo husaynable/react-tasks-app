@@ -15,7 +15,7 @@ const Paginator = ({
     onSetCurrentPage(page);
     onLoadTasks(page, sortField, sortDirection);
   };
-  console.log(countOfPages);
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Pagination>

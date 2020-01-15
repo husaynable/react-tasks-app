@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import TasksList from '../components/TasksList';
 import Sort from '../components/Sort';
 import NewTask from '../components/NewTask';
-import { connect } from 'react-redux';
 import Paginator from '../components/Paginator';
 import { logout } from '../actions';
 

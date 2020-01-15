@@ -34,8 +34,8 @@ const Sort = ({ currentPage, onSortChanged, onLoadTasks }) => {
           defaultValue={direction}
           onChange={setDirection}
         >
-          <ToggleButton value={'asc'}>ASC</ToggleButton>
-          <ToggleButton value={'desc'}>DESC</ToggleButton>
+          <ToggleButton value={'asc'}>Возр.</ToggleButton>
+          <ToggleButton value={'desc'}>Убыв.</ToggleButton>
         </ToggleButtonGroup>
       </div>
     </>

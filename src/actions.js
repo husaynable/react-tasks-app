@@ -7,6 +7,8 @@ export const TASK_ADDING_ERROR = 'TASK_ADDING_ERROR';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const SORT_CHANGED = 'SORT_CHANGED';
 
+export const TASK_EDIT = 'TASK_EDIT';
+
 export const LOGGED_IN = 'LOGGED_IN';
 export const LOGGED_OUT = 'LOGGED_OUT';
 
@@ -67,6 +69,18 @@ export const sortChanged = (field, direction) => {
     type: SORT_CHANGED,
     payload: { field, direction }
   };
+};
+
+export const editTask = (id, form, successHandler, errorHandler) => {
+  fetch(getUrl('edit/' + id), { method: 'POST', body: form })
+    .then(res => res.json())
+    .then(body => {
+      if (body.status === 'error') {
+        errorHandler(body.message);
+      } else {
+        successHandler();
+      }
+    });
 };
 
 export const login = (form, successHandler, errorHandler) => {

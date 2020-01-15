@@ -2,6 +2,15 @@
   margin-top: 15px;
 }
 
+.Task__header {
+  display: flex;
+  align-items: center;
+}
+
+.Task__header > code {
+  margin-left: 10px;
+}
+
 .Task__status {
   text-align: right;
   color: gray;
