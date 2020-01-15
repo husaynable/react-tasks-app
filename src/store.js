@@ -18,11 +18,16 @@ export function reducer(state = initialState, action) {
         tasks: action.payload.tasks,
         countOfPages: action.payload.countOfPages
       };
-    case actions.TASK_ADDED:
+    // case actions.TASK_ADDED:
+    //   return {
+    //     ...state,
+    //     tasks: [...state.tasks, action.payload],
+    //     countOfPages: ++state.countOfPages
+    //   };
+    case actions.SET_CURRENT_PAGE:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
-        countOfPages: ++state.countOfPages
+        currentPage: action.payload
       };
     case actions.SORT_CHANGED:
       return {
@@ -33,13 +38,11 @@ export function reducer(state = initialState, action) {
     case actions.LOGGED_IN:
       return {
         ...state,
-        token: action.payload,
         isAdmin: true
       };
     case actions.LOGGED_OUT:
       return {
         ...state,
-        token: null,
         isAdmin: false
       };
     default:

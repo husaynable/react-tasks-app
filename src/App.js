@@ -1,17 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { connect } from 'react-redux';
 
-function App({ isAdmin }) {
+function App() {
   return (
     <BrowserRouter>
-      <Button style={{ position: 'absolute', right: '10px' }}>
-        {isAdmin ? 'Выйти' : 'Войти'}
-      </Button>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/" component={Home} />
@@ -20,10 +15,4 @@ function App({ isAdmin }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    isAdmin: state.isAdmin
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

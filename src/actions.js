@@ -1,15 +1,14 @@
-import { getUrl } from './utils';
+import { getUrl, deleteToken, setTokenToLS } from './utils';
 
 export const TASKS_LOADED = 'TASKS_LOADED';
 export const ADD_TASK = 'ADD_TASK';
 export const TASK_ADDED = 'TASK_ADDED';
 export const TASK_ADDING_ERROR = 'TASK_ADDING_ERROR';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const SORT_CHANGED = 'SORT_CHANGED';
 
 export const LOGGED_IN = 'LOGGED_IN';
 export const LOGGED_OUT = 'LOGGED_OUT';
-
-export const SET_PAGE = 'SET_PAGE';
 
 export const loadTasks = (
   page = 1,
@@ -26,11 +25,15 @@ export const loadTasks = (
     fetch(getUrl('') + '&' + params.toLocaleString())
       .then(response => response.json())
       .then(body => {
+        sortChanged(sortField, sortDirection);
+        setCurrentPage(page);
         dispatch({
           type: TASKS_LOADED,
           payload: {
             tasks: body.message.tasks,
-            countOfPages: Math.floor(body.message['total_task_count'] / 3)
+            countOfPages: Math.ceil(
+              Number.parseInt(body.message['total_task_count'], 10) / 3
+            )
           }
         });
       });
@@ -46,9 +49,16 @@ export const addTask = (form, successHandler, errorHandler) => {
           errorHandler(body.message);
         } else {
           successHandler();
-          dispatch({ type: TASK_ADDED, payload: body.message });
+          dispatch(loadTasks());
         }
       });
+  };
+};
+
+export const setCurrentPage = page => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page
   };
 };
 
@@ -68,8 +78,16 @@ export const login = (form, successHandler, errorHandler) => {
           errorHandler(body.message);
         } else {
           successHandler();
-          dispatch({ type: LOGGED_IN, payload: body.message.token });
+          setTokenToLS(body.message.token);
+          dispatch({ type: LOGGED_IN });
         }
       });
+  };
+};
+
+export const logout = () => {
+  deleteToken();
+  return {
+    type: LOGGED_OUT
   };
 };

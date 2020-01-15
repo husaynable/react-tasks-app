@@ -3,14 +3,14 @@ import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { sortChanged, loadTasks } from '../actions';
 import { connect } from 'react-redux';
 
-const Sort = ({ onSortChanged, onLoadTasks }) => {
+const Sort = ({ currentPage, onSortChanged, onLoadTasks }) => {
   const [field, setField] = useState('username');
   const [direction, setDirection] = useState('asc');
 
   useEffect(() => {
     onSortChanged(field, direction);
-    onLoadTasks(field, direction);
-  }, [onSortChanged, onLoadTasks, field, direction]);
+    onLoadTasks(currentPage, field, direction);
+  }, [onSortChanged, onLoadTasks, currentPage, field, direction]);
 
   return (
     <>
@@ -42,12 +42,19 @@ const Sort = ({ onSortChanged, onLoadTasks }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    currentPage: state.currentPage
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onSortChanged: (field, direction) =>
       dispatch(sortChanged(field, direction)),
-    onLoadTasks: (field, direction) => dispatch(loadTasks(1, field, direction))
+    onLoadTasks: (page, field, direction) =>
+      dispatch(loadTasks(page, field, direction))
   };
 };
 
-export default connect(null, mapDispatchToProps)(Sort);
+export default connect(mapStateToProps, mapDispatchToProps)(Sort);

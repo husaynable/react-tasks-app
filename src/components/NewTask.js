@@ -10,8 +10,8 @@ const NewTask = ({ onAddTask }) => {
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
 
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [hasErrors, setHasErrors] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorsAlert, setShowErrorsAlert] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
 
   const sendHandler = () => {
@@ -20,17 +20,17 @@ const NewTask = ({ onAddTask }) => {
     form.append('email', email);
     form.append('text', text);
 
-    onAddTask(form, setIsSuccess.bind(null, true), errorHandler);
+    onAddTask(form, setShowSuccessAlert.bind(null, true), errorHandler);
   };
 
   const errorHandler = errorMessages => {
-    setHasErrors(true);
+    setShowErrorsAlert(true);
     setErrorMessages(errorMessages);
   };
 
   const clearAllFlags = () => {
-    setIsSuccess(false);
-    setHasErrors(false);
+    setShowSuccessAlert(false);
+    setShowErrorsAlert(false);
   };
 
   return (
@@ -64,10 +64,10 @@ const NewTask = ({ onAddTask }) => {
             ></Form.Control>
           </Form.Group>
 
-          {isSuccess ? (
+          {showSuccessAlert ? (
             <Alert variant="success">Успешно добавлено!</Alert>
           ) : null}
-          {hasErrors ? (
+          {showErrorsAlert ? (
             <Alert variant="danger">
               {Object.entries(errorMessages).map(errorMsg => (
                 <div key={errorMsg[0]}>

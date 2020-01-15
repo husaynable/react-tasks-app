@@ -1,3 +1,7 @@
+export function setTokenToLS(token) {
+  localStorage.setItem('TASKS_ADMIN_TOKEN', token);
+}
+
 export function getTokenFromLS() {
   return localStorage.getItem('TASKS_ADMIN_TOKEN');
 }
