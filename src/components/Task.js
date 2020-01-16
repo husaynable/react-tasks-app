@@ -3,8 +3,15 @@ import { Card } from 'react-bootstrap';
 
 import './Task.css';
 import { Link } from 'react-router-dom';
+import { getEditedTaskIds } from '../utils';
 
 const Task = ({ task, isAdmin }) => {
+  const isEditedByAdmin = () => {
+    console.log(getEditedTaskIds());
+    console.log(task.id);
+    return getEditedTaskIds().includes(task.id);
+  };
+
   return (
     <Card className="Task">
       <Card.Header className="Task__header">
@@ -20,6 +27,7 @@ const Task = ({ task, isAdmin }) => {
         <Card.Text>{task.text}</Card.Text>
         <div className="Task__status">
           {task.status === 0 ? 'не выполнено' : 'выполнено'}
+          {isEditedByAdmin() ? ' - редактировано администратором' : null}
         </div>
       </Card.Body>
     </Card>

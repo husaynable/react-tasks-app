@@ -1,9 +1,12 @@
+const TOKEN_KEY = 'TASKS_ADMIN_TOKEN';
+const EDITS_KEY = 'TASKS_EDITS_KEY';
+
 export function setTokenToLS(token) {
-  localStorage.setItem('TASKS_ADMIN_TOKEN', token);
+  localStorage.setItem(TOKEN_KEY, token);
 }
 
 export function getTokenFromLS() {
-  return localStorage.getItem('TASKS_ADMIN_TOKEN');
+  return localStorage.getItem(TOKEN_KEY);
 }
 
 export function getUrl(path) {
@@ -11,5 +14,17 @@ export function getUrl(path) {
 }
 
 export function deleteToken() {
-  localStorage.removeItem('TASKS_ADMIN_TOKEN');
+  localStorage.removeItem(TOKEN_KEY);
+}
+
+export function getEditedTaskIds() {
+  return JSON.parse(localStorage.getItem(EDITS_KEY)) || [];
+}
+
+export function addEditedTaskId(id) {
+  const currentIds = getEditedTaskIds();
+  if (!currentIds.includes(+id)) {
+    const newIds = [...currentIds, +id];
+    localStorage.setItem(EDITS_KEY, JSON.stringify(newIds));
+  }
 }

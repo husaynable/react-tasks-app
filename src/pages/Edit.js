@@ -3,7 +3,7 @@ import { Form, Button, Alert, Card } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { editTask } from '../actions';
-import { getTokenFromLS } from '../utils';
+import { getTokenFromLS, addEditedTaskId } from '../utils';
 
 const Edit = () => {
   const { id, text, status } = useParams();
@@ -20,12 +20,15 @@ const Edit = () => {
     form.append('text', editText);
     form.append('status', editStatus);
     form.append('token', getTokenFromLS());
-    console.log(getTokenFromLS());
 
     editTask(id, form, successHandler, errorHandler);
   };
 
   const successHandler = () => {
+    if (text !== editText) {
+      addEditedTaskId(id);
+    }
+
     history.push('/');
   };
 
