@@ -27,7 +27,12 @@ const Task = ({ task, isAdmin }) => {
         <Card.Text>{task.text}</Card.Text>
         <div className="Task__status">
           {task.status === 0 ? 'не выполнено' : 'выполнено'}
-          {isEditedByAdmin() ? ' - редактировано администратором' : null}
+          {isEditedByAdmin() ? (
+            <span>
+              <br />
+              редактировано администратором
+            </span>
+          ) : null}
         </div>
       </Card.Body>
     </Card>

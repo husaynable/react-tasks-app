@@ -38,9 +38,9 @@ const Edit = () => {
   };
 
   return (
-    <Card className="NewTask">
+    <Card className="container">
       <Card.Body>
-        <Card.Title>Новая задача</Card.Title>
+        <Card.Title>Редактировать задачу</Card.Title>
 
         <Form onChange={() => setShowErrorsAlert(false)}>
           <Form.Group controlId="text">
